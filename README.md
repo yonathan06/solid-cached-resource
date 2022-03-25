@@ -10,6 +10,14 @@ Features:
 - Cache results for next component mount, and refresh when wanted
 - Mutate local resource by key after a successful mutation remote request
 
+## install
+
+```sh
+pnpm add solid-cached-resource
+```
+
+or `npm`/`yarn`
+
 ## createCachedResource
 
 Inspired by [useQuery](https://react-query.tanstack.com/guides/queries) just for Solid `createResource`
