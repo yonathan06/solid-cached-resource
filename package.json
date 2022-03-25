@@ -1,7 +1,9 @@
 {
   "name": "solid-cached-resource",
   "version": "0.1.0",
-  "description": "",
+  "description": "Create a solid resource attached to a cached state by a unique key",
+  "info": "Heavily inspired by react-query, but for solid's createResource. Works fluently with Solid, by keeping the same API as createResource, the resource source (the first function parameter signal) is being converted to a string key.",
+  "author": "Yonatan Bendahan",
   "main": "dist/index.js",
   "module": "./dist/index.js",
   "type": "module",
@@ -15,8 +17,18 @@
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "homepage": "https://github.com/yonathan06/solid-cached-resource",
+  "contributors": [
+    {
+      "name": "Yonatan Bendahan",
+      "email": "yonatan.bendahan@gmail.com"
+    }
+  ],
+  "keywords": [
+    "solidjs",
+    "solidhack",
+    "best_app"
+  ],
   "license": "MIT",
   "dependencies": {
     "solid-js": "^1.3.13"
