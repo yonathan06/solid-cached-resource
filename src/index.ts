@@ -11,21 +11,56 @@ import type {
   ResourceFetcher,
 } from "solid-js/types/reactive/signal";
 import {
-  getCachedValue,
+  unifyFetcherForKey,
   getKeyForSource,
   initializeStoreFieldIfEmpty,
   store,
+  getCachedValue,
+  setCachedValue,
 } from "./cache";
 
-export function createCachedResource<T, S>(
+export interface CachedResourceOptions<T> {
+  initialValue?: T;
+  refetchOnMount?: boolean;
+}
+
+function getDefaultOptions<T>() {
+  return {
+    refetchOnMount: true,
+  };
+}
+
+export function createCachedResource<T, S = any>(
   source: ResourceSource<S>,
-  fetcher: ResourceFetcher<S, T>
+  fetcher: ResourceFetcher<S, T>,
+  options?: CachedResourceOptions<T>
 ) {
   const key = createMemo(() => getKeyForSource(source));
-  const resource = createResource<T, S>(source, async (sourceValues, info) => {
-    initializeStoreFieldIfEmpty(key());
-    return getCachedValue(sourceValues, key(), fetcher, info);
-  });
+  options = {
+    ...getDefaultOptions(),
+    ...(options ?? {}),
+  };
+  const resource = createResource<T, S>(
+    source,
+    async (sourceValues, info) => {
+      initializeStoreFieldIfEmpty(key());
+      const keyString = key();
+      if (
+        options?.initialValue &&
+        !info.refetching &&
+        !getCachedValue(keyString)
+      ) {
+        setCachedValue(keyString, options.initialValue);
+        return options.initialValue;
+      }
+      return unifyFetcherForKey(
+        key(),
+        () => fetcher(sourceValues, info),
+        !options!.refetchOnMount
+      );
+    },
+    { initialValue: getCachedValue(key()) }
+  );
   createEffect(() => {
     if (key()) {
       initializeStoreFieldIfEmpty(key());
@@ -43,7 +78,7 @@ export interface CreateMutationOptions<R> {
   onSuccess?: (value: R) => any;
 }
 
-export const createMutation = <T = any, R = any>(
+export const createMutation = <T, R = any>(
   fn: (input?: T) => Promise<R>,
   options?: CreateMutationOptions<R>
 ) => {

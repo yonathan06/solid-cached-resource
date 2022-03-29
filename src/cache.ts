@@ -1,4 +1,3 @@
-import { ResourceFetcher, ResourceFetcherInfo } from "solid-js";
 import {
   ResourceActions,
   ResourceSource,
@@ -31,6 +30,15 @@ export function initializeStoreFieldIfEmpty(key: string) {
   }
 }
 
+export function getCachedValue(key: string) {
+  return store[key]?.cachedValue;
+}
+
+export function setCachedValue<T>(key: string, value: T) {
+  initializeStoreFieldIfEmpty(key);
+  store[key].cachedValue = value;
+}
+
 export function getKeyForSource<S>(source: ResourceSource<S>): string {
   const value = typeof source === "function" ? (source as Function)() : source;
   if (value === false || value === null || value === undefined) return value;
@@ -39,13 +47,13 @@ export function getKeyForSource<S>(source: ResourceSource<S>): string {
   return key;
 }
 
-export async function getCachedValue<S, T = any>(
-  source: S,
+export async function unifyFetcherForKey<T = any>(
   key: string,
-  fetcher: ResourceFetcher<S, T>,
-  info: ResourceFetcherInfo<T>
+  fetcher: () => Promise<T> | T,
+  avoidFetchIfCached = false
 ): Promise<T> {
-  // if (store[key].cachedValue && !info.refetching) return store[key].cachedValue;
+  const cachedValue = getCachedValue(key);
+  if (cachedValue && avoidFetchIfCached) return cachedValue;
   if (store[key].isFetching) {
     let resolve: Resolve<T>, reject: Reject;
     const awaiterPromise = new Promise<T>((res, rej) => {
@@ -57,8 +65,8 @@ export async function getCachedValue<S, T = any>(
   }
   store[key].isFetching = true;
   try {
-    const value = await fetcher(source, info);
-    store[key].cachedValue = value;
+    const value = await fetcher();
+    setCachedValue(key, value);
     for (let { resolve } of store[key].awaiters) {
       resolve(value);
     }
