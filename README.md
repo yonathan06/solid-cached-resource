@@ -4,6 +4,8 @@ Create a [solid resource](https://www.solidjs.com/docs/latest/api#createresource
 Heavily inspired by [react-query](https://react-query.tanstack.com/), but for solid's [createResource](https://www.solidjs.com/docs/latest/api#createresource)
 Works fluently with Solid, by keeping the same API as createResource, the resource source (the first function parameter signal) is being converted to a string key.
 
+[API references](https://yonathan06.github.io/solid-cached-resource/)
+
 Features:
 
 - Create resource with the same key in multiple places - fetch onces
@@ -22,7 +24,7 @@ or `npm`/`yarn`
 
 Inspired by [useQuery](https://react-query.tanstack.com/guides/queries) just for Solid `createResource`
 
-```JavaScript
+```TypeScript
 import { createCachedResource } from "solid-cached-resource";
 
 export const createGetUserById = (userId: Accessor<string>) => {
@@ -47,11 +49,22 @@ const [user] = createGetUserById(props.userId);
 
 In the case above, if `props.userId` has the same value, the key will be the same, so event though both components are creating the same resource with the same fetcher only one request will be made to the server.
 
+### With options
+
+`createCachedResource` accepts and optional [options](https://yonathan06.github.io/solid-cached-resource/interfaces/CachedResourceOptions.html) object as it's third argument
+
+```TypeScript
+{
+  initialValue?: T (default undefined)
+  refetchOnMount?: boolean (default true)
+}
+```
+
 ## createMutations
 
 Inspired by [useMutation](https://react-query.tanstack.com/guides/mutations), with onSuccess hook, and `mutateCachedValue` utility function.
 
-```JavaScript
+```TypeScript
 import {
   mutateCachedValue,
   createMutation,

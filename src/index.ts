@@ -30,6 +30,19 @@ function getDefaultOptions<T>() {
   };
 }
 
+/**
+ * Create a cached resource
+ * ```typescript
+ * const [user, { refetch, mutate }] = createCachedResource(() => ["user", props.id], async ([, userId]) => {
+ *  // ...fetch data
+ * });
+ * ```
+ * @param source - reactive data function to toggle the request - key is derived for the value (parsed to string)
+ * @param fetcher - function that receives the source (or true) and an accessor for the last or initial value and returns a value or a Promise with the value
+ * @param options - optional object with the initialValue and refetchOnMount flag (defaults to true)
+ *
+ * @description https://yonathan06.github.io/solid-cached-resource/modules.html#createCachedResource
+ */
 export function createCachedResource<T, S = any>(
   source: ResourceSource<S>,
   fetcher: ResourceFetcher<S, T>,
@@ -78,6 +91,18 @@ export interface CreateMutationOptions<R> {
   onSuccess?: (value: R) => any;
 }
 
+/**
+ * Create mutation
+ * ```typescript
+ * const { mutateAsync, isLoading } = createMutation(async (values) => {
+ *  // ...fetch data
+ * });
+ * ```
+ * @param mutateFunction - function to be called when mutateAsync is called
+ * @param options - optional object with the onSuccess hook
+ *
+ * @description https://yonathan06.github.io/solid-cached-resource/modules.html#createMutation
+ */
 export const createMutation = <T, R = any>(
   fn: (input?: T) => Promise<R>,
   options?: CreateMutationOptions<R>
@@ -125,6 +150,23 @@ export const createMutation = <T, R = any>(
   };
 };
 
+/**
+ * Mutated cached value
+ * ```typescript
+ * mutateCachedValue(() => ["user", props.id], (prev) => {
+ *  return {
+ *    ...prev,
+ *    ...newUserData,
+ *  }
+ * })
+ * ```
+ * Will trigger the `mutate` function on all resources that has the same key
+ *
+ * @param source - reactive data function to toggle the request - key is derived for the value (parsed to string)
+ * @param value - The new value for the given key. Can be any data, or a function that provides the previous cached data
+ *
+ * @description https://yonathan06.github.io/solid-cached-resource/modules.html#mutateCachedValue
+ */
 export function mutateCachedValue<S, T = any>(
   source: S,
   value: T | ((prev: T) => T)
