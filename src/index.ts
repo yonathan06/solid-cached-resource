@@ -51,7 +51,7 @@ export function createCachedResource<T, S = any>(
   const key = createMemo(() => getKeyForSource(source));
   options = {
     ...getDefaultOptions(),
-    ...(options ?? {}),
+    ...(options || {}),
   };
   const resource = createResource<T, S>(
     source,
