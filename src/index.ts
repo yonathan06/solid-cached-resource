@@ -91,8 +91,6 @@ export interface CreateMutationOptions<R> {
   onSuccess?: (value: R) => any;
 }
 
-export type MutationFunction = Function;
-
 /**
  * Create mutation
  * ```typescript
