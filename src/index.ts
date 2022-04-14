@@ -91,6 +91,8 @@ export interface CreateMutationOptions<R> {
   onSuccess?: (value: R) => any;
 }
 
+export type MutationFunction = Function;
+
 /**
  * Create mutation
  * ```typescript
@@ -103,8 +105,8 @@ export interface CreateMutationOptions<R> {
  *
  * @description https://yonathan06.github.io/solid-cached-resource/modules.html#createMutation
  */
-export const createMutation = <T, R = any>(
-  fn: (input?: T) => Promise<R>,
+export const createMutation = <T = any, R = any>(
+  fn: (input: T) => Promise<R>,
   options?: CreateMutationOptions<R>
 ) => {
   const [isLoading, setIsLoading] = createSignal(false);
@@ -112,10 +114,10 @@ export const createMutation = <T, R = any>(
   const [error, setError] = createSignal<Error | any>();
   const isError = () => !!error();
   const [returnedData, setReturnedData] = createSignal<R>();
-  const mutateAsync = async (input?: T) => {
+  const mutateAsync: typeof fn = async (...args) => {
     setIsLoading(true);
     try {
-      const response: R = await fn(input);
+      const response: R = await fn(...args);
       batch(() => {
         setIsLoading(false);
         setReturnedData(() => response);
@@ -129,6 +131,7 @@ export const createMutation = <T, R = any>(
         setIsLoading(false);
         setError(e);
       });
+      throw e;
     }
   };
   const reset = () => {
