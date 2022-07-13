@@ -2,17 +2,18 @@
   "compilerOptions": {
     "module": "ESNext",
     "target": "ESNext",
-    "newLine": "LF",
     "outDir": "./dist",
     "declaration": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "strict": true,
     "strictNullChecks": true,
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
-    "types": ["solid-js"]
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true
   },
-  "include": ["./src"],
-  "exclude": ["node_modules"]
+  "include": ["src"]
 }

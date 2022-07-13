@@ -103,13 +103,13 @@ export interface CreateMutationOptions<R> {
  *
  * @description https://yonathan06.github.io/solid-cached-resource/modules.html#createMutation
  */
-export const createMutation = <T = any, R = any>(
-  fn: (input: T) => Promise<R>,
+export const createMutation = <T = unknown, R = unknown>(
+  fn: (args: T) => Promise<R>,
   options?: CreateMutationOptions<R>
 ) => {
   const [isLoading, setIsLoading] = createSignal(false);
   const [isSuccess, setIsisSuccess] = createSignal(false);
-  const [error, setError] = createSignal<Error | any>();
+  const [error, setError] = createSignal<Error | unknown>();
   const isError = () => !!error();
   const [returnedData, setReturnedData] = createSignal<R>();
   const mutateAsync: typeof fn = async (...args) => {
