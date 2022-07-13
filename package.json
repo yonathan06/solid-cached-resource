@@ -1,6 +1,6 @@
 {
   "name": "solid-cached-resource",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "description": "Create a solid resource attached to a cached state by a unique key",
   "info": "Heavily inspired by react-query, but for solid's createResource. Works fluently with Solid, by keeping the same API as createResource, the resource source (the first function parameter signal) is being converted to a string key.",
   "author": "Yonatan Bendahan",
