@@ -1,4 +1,4 @@
-# Solid Cached Resource (Experimental)
+# Solid Cached Resource
 
 Create a [solid resource](https://www.solidjs.com/docs/latest/api#createresource) attached to a cached state by a unique key.
 Heavily inspired by [react-query](https://react-query.tanstack.com/), but for solid's [createResource](https://www.solidjs.com/docs/latest/api#createresource)
