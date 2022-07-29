@@ -8,9 +8,9 @@ Works fluently with Solid, by keeping the same API as createResource, the resour
 
 Features:
 
-- Create resource with the same key in multiple places - fetch onces
+- Create resource with the same key in multiple places - fetch once
 - Cache results for next component mount, and refresh when wanted
-- Mutate local resource by key after a successful mutation remote request
+- Mutate local resource by key after a successful remote mutation request
 
 ## install
 
@@ -47,11 +47,11 @@ const [user] = createGetUserById(props.userId);
 <span>{user().name}</span>
 ```
 
-In the case above, if `props.userId` has the same value, the key will be the same, so event though both components are creating the same resource with the same fetcher only one request will be made to the server.
+In the case above, if `props.userId` has the same value, the key will be the same, so even though both components are creating the same resource with the same fetcher, only one request will be made to the server.
 
 ### With options
 
-`createCachedResource` accepts and optional [options](https://yonathan06.github.io/solid-cached-resource/interfaces/CachedResourceOptions.html) object as it's third argument
+`createCachedResource` accepts an optional [options](https://yonathan06.github.io/solid-cached-resource/interfaces/CachedResourceOptions.html) object as its third argument
 
 ```TypeScript
 {
@@ -85,4 +85,4 @@ export const createUpdateUser = (userId: Accessor<string>) => {
 }
 ```
 
-`mutateCachedValue` will call the resources `mutate` function with the provided key, so the signals will be updated across your components.
+`mutateCachedValue` will call the resources' `mutate` function with the provided key, so the signals will be updated across your components.
