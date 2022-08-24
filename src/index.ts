@@ -184,3 +184,21 @@ export function mutateCachedValue<S, T = any>(
     }
   });
 }
+
+/**
+ * 
+ * Refetch resources for key 
+ * ```typescript
+ * refetchResourceForKey(() => ["user", props.id])
+ * ```
+ * 
+ * Will trigger the `refresh` function on all resources that has the same key
+ * @param source - reactive data function to toggle the request - key is derived for the value (parsed to string)
+ */
+export function refetchResourceForKey<S>(source: S) {
+  const key = getKeyForSource(source);
+  const actions = store[key].resourceActions;
+  for (const action of actions) {
+    action.refetch();
+  }
+}
