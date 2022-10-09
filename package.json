@@ -15,8 +15,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "createDocs": "typedoc src/index.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "createDocs": "typedoc src/index.ts"
   },
   "homepage": "https://github.com/yonathan06/solid-cached-resource",
   "contributors": [
@@ -32,7 +31,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "solid-js": "^1.4.7"
+    "solid-js": "^1.5.7"
   },
   "devDependencies": {
     "typedoc": "^0.23.7",
