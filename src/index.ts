@@ -17,7 +17,7 @@ import {
   store,
   getCachedValue,
   setCachedValue,
-} from "./cache";
+} from "./cache.js";
 
 export interface CachedResourceOptions<T> {
   initialValue?: T;

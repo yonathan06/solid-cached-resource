@@ -2,7 +2,7 @@ import {
   ResourceActions,
   ResourceSource,
 } from "solid-js/types/reactive/signal";
-import { isPlainObject, stringyValue } from "./utils";
+import { isPlainObject, stringyValue } from "./utils.js";
 
 type Resolve<T> = (value: T) => void;
 type Reject = (reason?: any) => void;
