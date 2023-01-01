@@ -37,12 +37,12 @@ export const createGetUserById = (userId: Accessor<string>) => {
 }
 
 // MyComp.tsx
-const [user] = createGetUserById(props.userId);
+const [user] = createGetUserById(() => props.userId);
 
 <div>{user().name}</div>
 
 // MyOtherComp.tsx
-const [user] = createGetUserById(props.userId);
+const [user] = createGetUserById(() => props.userId);
 
 <span>{user().name}</span>
 ```
