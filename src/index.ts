@@ -80,7 +80,7 @@ export function createCachedResource<T, S = any>(
       store[key()].resourceActions.push(resource[1]);
       const mutatorIndex = store[key()].resourceActions.length - 1;
       onCleanup(() => {
-        store[key()].resourceActions.splice(mutatorIndex, 1);
+        store[key()]?.resourceActions.splice(mutatorIndex, 1);
       });
     }
   });
