@@ -15,7 +15,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "createDocs": "typedoc src/index.ts"
+    "createDocs": "typedoc src/index.ts",
+    "test": "vitest"
   },
   "homepage": "https://github.com/yonathan06/solid-cached-resource",
   "contributors": [
@@ -26,8 +27,13 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "@solidjs/testing-library": "^0.7.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "jsdom": "^21.1.1",
     "solid-js": "^1.7.3",
     "typedoc": "^0.23.7",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "vite-plugin-solid": "^2.7.0",
+    "vitest": "^0.30.1"
   }
 }
