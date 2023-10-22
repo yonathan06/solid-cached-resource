@@ -31,8 +31,8 @@ export const createGetUserById = (userId: Accessor<string>) => {
   return createCachedResource(
     () => ["user", userId()],
     async ([, userId]) => {
-      const response = fetch(`/users/${userId}`);
-      return await response.json();
+      const response = await fetch(`/users/${userId}`);
+      return response.json();
     });
 }
 
