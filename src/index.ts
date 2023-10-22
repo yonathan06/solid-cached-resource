@@ -56,8 +56,8 @@ export function createCachedResource<T, S = any>(
   const resource = createResource<T, S>(
     source,
     async (sourceValues, info) => {
-      initializeStoreFieldIfEmpty(key());
       const keyString = key();
+      initializeStoreFieldIfEmpty(keyString);
       if (
         options?.initialValue &&
         !info.refetching &&
@@ -67,7 +67,7 @@ export function createCachedResource<T, S = any>(
         return options.initialValue;
       }
       return unifyFetcherForKey(
-        key(),
+        keyString,
         () => fetcher(sourceValues, info),
         !options!.refetchOnMount
       );
@@ -75,12 +75,13 @@ export function createCachedResource<T, S = any>(
     { initialValue: getCachedValue(key()) }
   );
   createEffect(() => {
-    if (key()) {
-      initializeStoreFieldIfEmpty(key());
-      store[key()].resourceActions.push(resource[1]);
-      const mutatorIndex = store[key()].resourceActions.length - 1;
+    const keyString = key();
+    if (keyString) {
+      initializeStoreFieldIfEmpty(keyString);
+      store[keyString].resourceActions.push(resource[1]);
+      const mutatorIndex = store[keyString].resourceActions.length - 1;
       onCleanup(() => {
-        store[key()]?.resourceActions?.splice(mutatorIndex, 1);
+        store[keyString]?.resourceActions?.splice(mutatorIndex, 1);
       });
     }
   });
@@ -186,12 +187,12 @@ export function mutateCachedValue<S, T = any>(
 }
 
 /**
- * 
- * Refetch resources for key 
+ *
+ * Refetch resources for key
  * ```typescript
  * refetchResourceForKey(() => ["user", props.id])
  * ```
- * 
+ *
  * Will trigger the `refresh` function on all resources that has the same key
  * @param source - reactive data function to toggle the request - key is derived for the value (parsed to string)
  */

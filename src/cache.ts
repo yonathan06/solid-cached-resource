@@ -70,10 +70,16 @@ export async function unifyFetcherForKey<T = any>(
     for (let { resolve } of store[key].awaiters) {
       resolve(value);
     }
+    for (let { mutate } of store[key].resourceActions) {
+      mutate(value as never);
+    }
     return value;
   } catch (e) {
     for (let { reject } of store[key].awaiters) {
       reject(e);
+    }
+    for (let { mutate } of store[key].resourceActions) {
+      mutate(undefined);
     }
     return undefined as any;
   } finally {
