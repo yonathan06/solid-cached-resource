@@ -81,7 +81,7 @@ export async function unifyFetcherForKey<T = any>(
     for (let { mutate } of store[key].resourceActions) {
       mutate(undefined);
     }
-    return undefined as any;
+    throw e;
   } finally {
     store[key].isFetching = false;
     store[key].awaiters = [];
