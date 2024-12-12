@@ -4,7 +4,7 @@
 
 Inspired by TanStack Query, with minimal API and footprint, built only for SolidJS.
 The (almost) same API as [createResource](https://www.solidjs.com/docs/latest/api#createresource).
-Include `createMutation` for easier mutation state handleing
+Includes `createMutation` for easier mutation state handling.
 
 [API references](https://yonathan06.github.io/solid-cached-resource/)
 
