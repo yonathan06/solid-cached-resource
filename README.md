@@ -2,9 +2,9 @@
 
 # Solid Cached Resource
 
-Create a [solid resource](https://www.solidjs.com/docs/latest/api#createresource) attached to a cached state by a unique key.
-Heavily inspired by [react-query](https://react-query.tanstack.com/), but for solid's [createResource](https://www.solidjs.com/docs/latest/api#createresource)
-Works fluently with Solid, by keeping the same API as createResource, the resource source (the first function parameter signal) is being converted to a string key.
+Inspired by TanStack Query, with minimal API and footprint, built only for SolidJS.
+The (almost) same API as [createResource](https://www.solidjs.com/docs/latest/api#createresource).
+Include `createMutation` for easier mutation state handleing
 
 [API references](https://yonathan06.github.io/solid-cached-resource/)
 
