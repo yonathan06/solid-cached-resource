@@ -1,3 +1,5 @@
+![NPM Version](https://img.shields.io/npm/v/solid-cached-resource) ![npm bundle size](https://img.shields.io/bundlephobia/min/solid-cached-resource) ![NPM License](https://img.shields.io/npm/l/solid-cached-resource)
+
 # Solid Cached Resource
 
 Create a [solid resource](https://www.solidjs.com/docs/latest/api#createresource) attached to a cached state by a unique key.
