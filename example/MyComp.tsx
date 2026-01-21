@@ -10,7 +10,7 @@ interface User {
 
 const userKey = "users";
 const useGetUsers = () => {
-	return createCachedResource<User[]>(userKey, async () => {
+	return createCachedResource(userKey, async () => {
 		const response = await fetch("https://myapi.com/users");
 		return (await response.json()) as User[];
 	});

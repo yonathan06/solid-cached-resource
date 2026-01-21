@@ -87,8 +87,8 @@ export function createCachedResource<T, S>(
 	return resource;
 }
 
-export interface CreateMutationOptions<R> {
-	onSuccess?: (value: R) => unknown;
+export interface CreateMutationOptions<T, R> {
+	onSuccess?: (value: R, params: T) => unknown;
 }
 
 /**
@@ -103,9 +103,9 @@ export interface CreateMutationOptions<R> {
  *
  * https://yonathan06.github.io/solid-cached-resource/modules.html#createMutation
  */
-export const createMutation = <T = unknown, R = unknown>(
-	fn: (args: T) => Promise<R>,
-	options?: CreateMutationOptions<R>,
+export const createMutation = <T extends Array<unknown> = unknown[], R = unknown>(
+	fn: (...args: T) => Promise<R>,
+	options?: CreateMutationOptions<T, R>,
 ) => {
 	const [isLoading, setIsLoading] = createSignal(false);
 	const [isSuccess, setIsisSuccess] = createSignal(false);
@@ -120,7 +120,7 @@ export const createMutation = <T = unknown, R = unknown>(
 				setIsLoading(false);
 				setReturnedData(() => response);
 				setIsisSuccess(true);
-				options?.onSuccess?.(response);
+				options?.onSuccess?.(response, args);
 			});
 			return response;
 		} catch (e) {
