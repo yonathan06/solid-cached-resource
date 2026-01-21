@@ -5,11 +5,9 @@ import {
 	createResource,
 	createSignal,
 	onCleanup,
+	type ResourceFetcher,
+	type ResourceSource,
 } from "solid-js";
-import type {
-	ResourceFetcher,
-	ResourceSource,
-} from "solid-js/types/reactive/signal";
 import {
 	getCachedValue,
 	getKeyForSource,
