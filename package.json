@@ -14,7 +14,7 @@
 		}
 	},
 	"scripts": {
-		"build": "tsc",
+		"build": "rm -rf .dist && tsc",
 		"check:types": "tsc --noEmit",
 		"lint": "biome check",
 		"createDocs": "typedoc src/index.ts",
