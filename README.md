@@ -1,7 +1,3 @@
-# DEPRECATED
-
-## I created this lib before [TanStack query](https://tanstack.com/query/latest) was available for Solidjs, use that instead
-
 ![NPM Version](https://img.shields.io/npm/v/solid-cached-resource) ![npm bundle size](https://img.shields.io/bundlephobia/min/solid-cached-resource) ![NPM License](https://img.shields.io/npm/l/solid-cached-resource)
 
 # Solid Cached Resource
