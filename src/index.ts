@@ -4,6 +4,7 @@ import {
 	createMemo,
 	createResource,
 	createSignal,
+	InitializedResourceReturn,
 	onCleanup,
 	type ResourceFetcher,
 	type ResourceSource,
@@ -42,17 +43,19 @@ function getDefaultOptions() {
  *
  * https://yonathan06.github.io/solid-cached-resource/modules.html#createCachedResource
  */
-export function createCachedResource<T, S>(
-	source: ResourceSource<S>,
-	fetcher: ResourceFetcher<S, T>,
-	options?: CachedResourceOptions<T>,
-) {
+export function createCachedResource<T, S, R = unknown>(
+  source: ResourceSource<S>,
+  fetcher: ResourceFetcher<S, T, R>,	
+  options?: CachedResourceOptions<T>,
+): InitializedResourceReturn<T, R>{
 	const key = createMemo(() => getKeyForSource(source));
+
 	options = {
 		...getDefaultOptions(),
 		...(options || {}),
 	};
-	const resource = createResource<T, S>(
+
+	const resource = createResource<T, S, R>(
 		source,
 		async (sourceValues, info) => {
 			const keyString = key();
@@ -73,17 +76,19 @@ export function createCachedResource<T, S>(
 		},
 		{ initialValue: getCachedValue(key()) },
 	);
+
 	createEffect(() => {
 		const keyString = key();
 		if (keyString) {
 			initializeStoreFieldIfEmpty(keyString);
-			(store[keyString] as StoreField<T>).resourceActions.push(resource[1]);
+			(store[keyString] as StoreField<T, R>).resourceActions.push(resource[1]);
 			const mutatorIndex = store[keyString].resourceActions.length - 1;
 			onCleanup(() => {
 				store[keyString]?.resourceActions?.splice(mutatorIndex, 1);
 			});
 		}
 	});
+
 	return resource;
 }
 

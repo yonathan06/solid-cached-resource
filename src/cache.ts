@@ -7,15 +7,15 @@ import { isPlainObject, stringyValue } from "./utils.js";
 type Resolve<T> = (value: T) => void;
 type Reject = (reason?: unknown) => void;
 
-export interface StoreField<T = unknown> {
+export interface StoreField<T, R = unknown> {
 	cachedValue?: T;
 	isFetching: boolean;
 	awaiters: { resolve: Resolve<T>; reject: Reject }[];
-	resourceActions: ResourceActions<T>[];
+	resourceActions: ResourceActions<T, R>[];
 }
 
 interface Store {
-	[key: string]: StoreField;
+	[key: string]: StoreField<unknown>;
 }
 
 export const store: Store = {};
